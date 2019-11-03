@@ -39,7 +39,7 @@ class UsersServer {
         server?.awaitTermination()
     }
 
-    internal class UserImpl : UserGrpc.UserImplBase() {
+    internal class UserImpl : UserServiceGrpc.UserServiceImplBase() {
 
         override fun getUser(req: UserRequest, responseObserver: StreamObserver<UserResponse>) {
             val reply = UserResponse.newBuilder().setMessage("User with id ${req.id}").build()

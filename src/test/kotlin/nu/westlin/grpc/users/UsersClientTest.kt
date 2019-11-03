@@ -23,8 +23,8 @@ class UsersClientTest {
     @get:Rule
     val grpcCleanup = GrpcCleanupRule()
 
-    private val serviceImpl = mock(UserGrpc.UserImplBase::class.java, delegatesTo<Any>(
-        object : UserGrpc.UserImplBase() {
+    private val serviceImpl = mock(UserServiceGrpc.UserServiceImplBase::class.java, delegatesTo<Any>(
+        object : UserServiceGrpc.UserServiceImplBase() {
             override fun getUser(request: UserRequest, responseObserver: StreamObserver<UserResponse>) {
                 responseObserver.onNext(UserResponse.getDefaultInstance())
                 responseObserver.onCompleted()
@@ -50,7 +50,7 @@ class UsersClientTest {
 
         client!!.getUser("1")
 
-        verify<UserGrpc.UserImplBase>(serviceImpl)
+        verify<UserServiceGrpc.UserServiceImplBase>(serviceImpl)
             .getUser(requestCaptor.capture(), ArgumentMatchers.any<StreamObserver<UserResponse>>())
         assertEquals("1", requestCaptor.value.id)
     }

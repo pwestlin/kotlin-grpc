@@ -23,7 +23,7 @@ class UsersServerTest {
         grpcCleanup.register(InProcessServerBuilder
             .forName(serverName).directExecutor().addService(UsersServer.UserImpl()).build().start())
 
-        val blockingStub = UserGrpc.newBlockingStub(
+        val blockingStub = UserServiceGrpc.newBlockingStub(
             grpcCleanup.register(InProcessChannelBuilder.forName(serverName).directExecutor()
                 .build()))
 

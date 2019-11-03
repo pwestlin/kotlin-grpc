@@ -9,7 +9,7 @@ import java.util.logging.Logger
 
 class UsersClient internal constructor(private val channel: ManagedChannel) : AutoCloseable {
 
-    private val userBlockingStub: UserGrpc.UserBlockingStub = UserGrpc.newBlockingStub(channel)
+    private val userServiceBlockingStub: UserServiceGrpc.UserServiceBlockingStub = UserServiceGrpc.newBlockingStub(channel)
 
     private constructor(host: String, port: Int) : this(ManagedChannelBuilder.forAddress(host, port)
         .usePlaintext()
@@ -24,7 +24,7 @@ class UsersClient internal constructor(private val channel: ManagedChannel) : Au
         logger.log(Level.INFO, "Looking for user with id ${id}...")
         val request = UserRequest.newBuilder().setId(id).build()
         val response: UserResponse = try {
-            userBlockingStub.getUser(request)
+            userServiceBlockingStub.getUser(request)
         } catch (e: StatusRuntimeException) {
             logger.log(Level.WARNING, "gRPC failure: ${e.status}")
             return
