@@ -12,9 +12,6 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class UsersServerTest {
 
-    /**
-     * Graceful shutdown for the registered components (servers and channels).
-     */
     @get:Rule
     val grpcCleanup = GrpcCleanupRule()
 
